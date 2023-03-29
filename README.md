@@ -47,7 +47,15 @@ The discriminator is optimized along with the generator network G<sub>θ<sub>G</
 
 <img src="ContentLoss.png">
 
+where i and j denote the layer and channel indices, and C, H, and W denote the number of channels, height, and width of the feature map, respectively. The VGG loss is calculated for multiple layers of the VGG network to capture both high-level and low-level features of the image. By using the VGG loss, the SRGAN can produce visually pleasing super-resolved images that are perceptually similar to the high-resolution reference images, rather than simply minimizing pixel-wise errors.
+
 ### Adversarial Loss
+
+<img src="AdversarialLoss.png">
+
+- In addition to the content loss, adversarial loss is also added to the perceptual loss.
+- This loss encourages the generator network to produce images that have a high probability of being classified as real by the discriminator network.
+- By incorporating this loss into the overall objective function, the generator network is trained to produce super-resolved images that not only have low perceptual differences with the ground truth images but also have high visual quality and naturalness.
 
 #### Metrics
 
