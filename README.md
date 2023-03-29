@@ -14,6 +14,41 @@
 <b>Exhaustive table of topics in Supervised Image Super-Resolution:</b>
 <img src="Table.JPG" alt="Exhaustive table of topics in Supervised Image Super-Resolution">
 
+## SRGAN(Super resolution Generative Adversarial Network)
+
+- The algorithm uses a deep <b>residual network (ResNet)</b> with <b>skip connections</b> and diverges from the mean squared error (MSE) as the sole optimization target. Instead of relying solely on the MSE, the algorithm defines a novel perceptual loss that uses high-level feature maps of the VGG network in combination with a discriminator to encourage solutions that are perceptually difficult to distinguish from the high-resolution (HR) reference images. This approach improves the perceptual quality of the reconstructed images and results in more natural-looking textures and structures.
+- By using the VGG model’s high-level feature maps in the perceptual loss, the SRGAN algorithm is able to capture the semantic content of the images and encourage the reconstruction of visually similar features.
+- The discriminator, on the other hand, is a component of a generative adversarial network (GAN) that is used to distinguish between real and fake images. In the context of SRGAN, the discriminator is trained to distinguish between the HR reference images and the reconstructed images produced by the generator network. By encouraging the reconstructed images to be perceptually difficult to distinguish from the HR images, the SRGAN algorithm is able to produce high-quality SR results that are visually appealing and indistinguishable from the HR reference images.
+- Prediction-based methods were among the first methods developed to tackle single-image super-resolution (SISR). These methods use filtering approaches such as linear, bicubic, or Lanczos filtering to upscale an image to a higher resolution. These methods are often fast, but they oversimplify the SISR problem and tend to produce solutions with overly smooth textures. This is because these methods only use local information to make their predictions and do not consider global image features or structures.
+- On the other hand, edge-preservation methods focus on preserving the edges and sharp features of the image during the upscaling process. These methods aim to produce SR images with more natural-looking textures and structures. Edge-preservation methods often use more complex algorithms, such as super-resolution using sparse representation (SRSR), iterative back-projection (IBP), and total variation (TV) regularization. These methods typically take longer to compute than prediction-based methods, but they are more effective at preserving the details and structures of the original image.
+- The main advantage of SRGAN over prediction-based methods is its ability to learn the mapping between low-resolution and high-resolution images from a large dataset. This allows the model to capture the complex patterns and structures of the high-resolution images and generate more realistic and detailed results. Moreover, SRGAN produces sharper and more realistic edges and textures compared to prediction-based methods, thanks to the adversarial loss function used in its training process.
+  In SISR, the goal is to generate a high-resolution image (I<sup>SR</sup>) from a low-resolution image (I<sup>LR</sup>) where the high-resolution images are only available during the training process. To generate I<sup>LR</sup> from I<sup>HR</sup>, a Gaussian filter is applied to I<sup>HR</sup> followed by a downsampling operation with a downsampling factor r. Here, W and H denote the width and height of the image, respectively, and C represents the number of color channels. Therefore, the size of the ILR tensor is W x H x C, while the size of the I<sup>HR</sup> and I<sup>SR</sup> tensors is rW x rH x C. The goal of the SISR algorithm is to estimate the ISR tensor from the I<sup>LR</sup> tensor.
+- The aim is to train a generator network that can estimate a high-resolution (HR) image from a given low-resolution (LR) image. The generator network is a feed-forward convolutional neural network (CNN) that is parametrized by θG, which includes the weights and biases of an L-layer deep network. The network is trained to optimize a SR-specific loss function, denoted by l<sup>SR</sup>, using a set of training images I<sub>n</sub><sup>HR</sup> and corresponding low-resolution images I<sub>n</sub><sup>LR</sup>, where n = 1, . . . , N. The objective is to minimize the average of l<sup>SR</sup> over all the training samples to obtain the optimal parameter values θG that can be used for super-resolution.
+
+<img src="Architecture2.png" alt="Architecture of SRGAN">
+
+### Use of Discriminator network (D<sub>θ<sub>D</sub></sub>)
+
+The discriminator is optimized along with the generator network G<sub>θ<sub>G</sub></sub> to solve the adversarial min-max problem. The goal is to train a generative model G that can fool the discriminator D, which is trained to distinguish super-resolved images from real images. By doing so, the generator can learn to create solutions that are highly similar to real images and difficult to classify by D, which encourages perceptually superior solutions residing in the subspace, or manifold, of natural images. This approach is in contrast to using pixel-wise error measurements, such as MSE, to obtain SR solutions.
+
+<img src="MinMax.png" alt="Min Max">
+
+### Perceptual Loss function
+
+<img src="PerceptualLoss.png">
+
+### Content Loss
+
+<img src="MSELoss.png">
+
+- This is the most widely used optimization technique for image SR. But as explained in the previous section, this method produces overly smooth images and often lacks high frequency elements.
+- Instead of using MSE loss, we instead use VGG loss.
+- The VGG loss used in the SRGAN is based on the ReLU activation layers of the pre-trained 19-layer VGG network. - Let φ<sub>i,j</sub> denote the feature map obtained by the j-th convolution (after activation) before the i-th max-pooling layer within the VGG19 network. Then, the VGG loss is defined as the Euclidean distance between the feature representations of a reconstructed image G<sub>θ<sub>G</sub></sub> (I<sup>LR</sup>) and the reference image I<sup>HR</sup>:
+
+<img src="ContentLoss.png">
+
+### Adversarial Loss
+
 #### Metrics
 
 1. <b>MSE Loss</b>
