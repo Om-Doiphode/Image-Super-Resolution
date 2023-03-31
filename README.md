@@ -12,7 +12,7 @@
 - Generally, the relationship between I<sup>LR</sup> and the original high-resolution image I<sup>HR</sup> can vary depending on the situation. Many studies assume that I<sup>LR</sup> is a bicubic downsampled version of I<sup>HR</sup>, but other degrading factors such as blur, decimation, or noise can also be considered for practical applications.
 
 <b>Exhaustive table of topics in Supervised Image Super-Resolution:</b>
-<img src="Table.JPG" alt="Exhaustive table of topics in Supervised Image Super-Resolution">
+<img src="assets/Table.JPG" alt="Exhaustive table of topics in Supervised Image Super-Resolution">
 
 ## SRGAN(Super resolution Generative Adversarial Network)
 
@@ -41,33 +41,33 @@
 - The network is trained to optimize a SR-specific loss function, denoted by l<sup>SR</sup>, using a set of training images I<sub>n</sub><sup>HR</sup> and corresponding low-resolution images I<sub>n</sub><sup>LR</sup>, where n = 1, . . . , N.
 - The objective is to minimize the average of l<sup>SR</sup> over all the training samples to obtain the optimal parameter values θG that can be used for super-resolution.
 
-<img src="Architecture2.png" alt="Architecture of SRGAN">
+<img src="assets/Architecture2.png" alt="Architecture of SRGAN">
 
 ### Use of Discriminator network (D<sub>θ<sub>D</sub></sub>)
 
 The discriminator is optimized along with the generator network G<sub>θ<sub>G</sub></sub> to solve the adversarial min-max problem. The goal is to train a generative model G that can fool the discriminator D, which is trained to distinguish super-resolved images from real images. By doing so, the generator can learn to create solutions that are highly similar to real images and difficult to classify by D, which encourages perceptually superior solutions residing in the subspace, or manifold, of natural images. This approach is in contrast to using pixel-wise error measurements, such as MSE, to obtain SR solutions.
 
-<img src="MinMax.png" alt="Min Max">
+<img src="assets/MinMax.png" alt="Min Max">
 
 ### Perceptual Loss function
 
-<img src="PerceptualLoss.png">
+<img src="assets/PerceptualLoss.png">
 
 ### Content Loss
 
-<img src="MSELoss.png">
+<img src="assets/MSELoss.png">
 
 - This is the most widely used optimization technique for image SR. But as explained in the previous section, this method produces overly smooth images and often lacks high frequency elements.
 - Instead of using MSE loss, we instead use VGG loss.
 - The VGG loss used in the SRGAN is based on the ReLU activation layers of the pre-trained 19-layer VGG network. - Let φ<sub>i,j</sub> denote the feature map obtained by the j-th convolution (after activation) before the i-th max-pooling layer within the VGG19 network. Then, the VGG loss is defined as the Euclidean distance between the feature representations of a reconstructed image G<sub>θ<sub>G</sub></sub> (I<sup>LR</sup>) and the reference image I<sup>HR</sup>:
 
-<img src="ContentLoss.png">
+<img src="assets/ContentLoss.png">
 
 where i and j denote the layer and channel indices, and C, H, and W denote the number of channels, height, and width of the feature map, respectively. The VGG loss is calculated for multiple layers of the VGG network to capture both high-level and low-level features of the image. By using the VGG loss, the SRGAN can produce visually pleasing super-resolved images that are perceptually similar to the high-resolution reference images, rather than simply minimizing pixel-wise errors.
 
 ### Adversarial Loss
 
-<img src="AdversarialLoss.png">
+<img src="assets/AdversarialLoss.png">
 
 - In addition to the content loss, adversarial loss is also added to the perceptual loss.
 - This loss encourages the generator network to produce images that have a high probability of being classified as real by the discriminator network.
@@ -115,7 +115,7 @@ Here, $MAX_i$ is the maximum pixel value of the image (for example, 255 for an 8
 
 For this task I have used <b>SRGAN</b> (Super-Resolution Generative Adversarial Network) which uses the idea of GAN for super-resolution task i.e. generator will try to produce an image from noise which will be judged by the discriminator. Both will keep training so that generator can generate images that can match the true training data.
 
-<img src="Architecture.png" alt="GAN Architecture">
+<img src="assets/Architecture.png" alt="GAN Architecture">
 
 Dataset with high and low resolution images were provided.
 
@@ -130,8 +130,8 @@ Dataset with high and low resolution images were provided.
 
 ## Results
 
-<img src="newplot.png">
-<img src="newplot(1).png">
+<img src="assets/newplot.png">
+<img src="assets/newplot(1).png">
 
 ### Metrics
 
