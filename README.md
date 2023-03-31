@@ -1,5 +1,22 @@
 # Image Super-Resolution
 
+## Approach
+
+For this task I have used <b>SRGAN</b> (Super-Resolution Generative Adversarial Network) which uses the idea of GAN for super-resolution task i.e. generator will try to produce an image from noise which will be judged by the discriminator. Both will keep training so that generator can generate images that can match the true training data.
+
+<img src="assets/Architecture.png" alt="GAN Architecture">
+
+Dataset with high and low resolution images were provided.
+
+1. Since the dataset had two different subfolders containing HR and LR images, I have first mapped the LR images to their corresponding HR images and then divided them into train and test folders.
+2. Images were in .npy format, so it was converted to .jpg by using opencv.
+3. The architecture for the model is defined. First the feature extractor is defined which is used for perceptual loss as this model works on comparing the feature maps formed by the VGG model.
+4. Then Generator and Discriminator blocks are defined. Generator is a deconvolutional block which upsamples the image while Discriminator is a convolutional block which downsamples the image.
+5. The output from the generator block is fed to the discriminator block.
+6. Generator job is to create a real image while the Discriminator job is to detect whether the input image from the generator is a real or fake image.
+7. The model is trained for 1 epoch.
+8. MSE, PSNR and SSIM are calculated after training.
+
 ## THEORY
 
 - Image super-resolution (SR) is the process of recovering high-resolution (HR) images from low-resolution (LR) images.
@@ -110,23 +127,6 @@ To calculate the PSNR value for a single image, we can use the following equatio
 $PSNR_i = 20 * log10(MAX_i) - 10 * log10(MSE_i)$
 
 Here, $MAX_i$ is the maximum pixel value of the image (for example, 255 for an 8-bit image), and $MSE_i$ is the mean squared error for the $ith$ image.
-
-## Approach
-
-For this task I have used <b>SRGAN</b> (Super-Resolution Generative Adversarial Network) which uses the idea of GAN for super-resolution task i.e. generator will try to produce an image from noise which will be judged by the discriminator. Both will keep training so that generator can generate images that can match the true training data.
-
-<img src="assets/Architecture.png" alt="GAN Architecture">
-
-Dataset with high and low resolution images were provided.
-
-1. Since the dataset had two different subfolders containing HR and LR images, I have first mapped the LR images to their corresponding HR images and then divided them into train and test folders.
-2. Images were in .npy format, so it was converted to .jpg by using opencv.
-3. The architecture for the model is defined. First the feature extractor is defined which is used for perceptual loss as this model works on comparing the feature maps formed by the VGG model.
-4. Then Generator and Discriminator blocks are defined. Generator is a deconvolutional block which upsamples the image while Discriminator is a convolutional block which downsamples the image.
-5. The output from the generator block is fed to the discriminator block.
-6. Generator job is to create a real image while the Discriminator job is to detect whether the input image from the generator is a real or fake image.
-7. The model is trained for 1 epoch.
-8. MSE, PSNR and SSIM are calculated after training.
 
 ## Results
 
